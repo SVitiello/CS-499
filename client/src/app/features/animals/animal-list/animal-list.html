@@ -1,0 +1,33 @@
+<div class="results-section" *ngIf="hasSearched">
+  <h2 class="results-title">Results</h2>
+
+  <div *ngIf="animals.length > 0; else noResults" class="results-grid">
+    <div class="animal-card" *ngFor="let animal of animals">
+      <h3>{{ animal.name }}</h3>
+
+      <p><strong>Type:</strong> {{ animal.animalType }}</p>
+      <p><strong>Gender:</strong> {{ animal.gender }}</p>
+      <p><strong>Age:</strong> {{ animal.age }}</p>
+      <p><strong>Weight:</strong> {{ animal.weight }} </p>
+      <p><strong>Training Status:</strong> {{ animal.trainingStatus }}</p>
+      <p><strong>Reserved:</strong> {{ animal.reserved ? 'Yes' : 'No' }}</p>
+      <p><strong>Favorite:</strong> {{ animal.isFavorite ? 'Yes' : 'No' }}</p>
+
+      <div class ="card-button-row">
+        <button class="favorite-button" (click)="favoriteAnimal(animal)">
+          {{ animal.isFavorite ? 'Remove Favorite' : 'Add to Favorites' }}
+        </button>
+
+        <button class="reserve-button" (click)="reserveAnimal(animal)">
+          {{ animal.reserved ? 'Unreserve' : 'Reserve' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="no-results">
+      <p>No animals matched your search.</p>
+    </div>
+  </ng-template>
+</div>

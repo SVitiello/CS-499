@@ -1,0 +1,38 @@
+<div class="page-container">
+  <div class="search-card">
+    <h2>Search Animals</h2>
+    <p class="search-subtitle">
+      Search for rescue animals by type and gender.
+    </p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="animalType">Type</label>
+        <select id="animalType" [(ngModel)]="animalType">
+          <option value="">Any</option>
+          <option value="Dog">Dog</option>
+          <option value="Monkey">Monkey</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select id="gender" [(ngModel)]="gender">
+          <option value="">Any</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <button type="button" (click)="searchAnimals()">Search</button>
+      <button type="button" class="clear-button" (click)="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+  <app-animal-list
+    [animals]="filteredAnimals"
+    [hasSearched]="hasSearched">
+  </app-animal-list>
+</div>

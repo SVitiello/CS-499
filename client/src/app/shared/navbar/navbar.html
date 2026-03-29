@@ -1,0 +1,8 @@
+<nav class = "navbar">
+  <div class = "navbar-content">
+    <h1> Rescue Animal System </h1>
+    <button 
+    *ngIf="!isLoginPage()"
+    class="logout-button" (click)="logout()">Log Out</button>
+  </div>
+</nav>

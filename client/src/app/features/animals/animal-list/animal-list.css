@@ -1,0 +1,86 @@
+.results-section h3 {
+  margin-bottom: 24px;
+  color: #4a6fa5;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.results-title {
+  margin: 32px 0 24px;
+  color: #4a6fa5;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.animal-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border-left: 6px solid #4a6fa5;
+}
+
+.animal-card h4 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #4a6fa5;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.animal-card p {
+  margin: 10px 0;
+  color: #333;
+  line-height: 1.4;
+}
+
+.no-results {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  color: #333;
+  text-align: center;
+}
+
+.card-button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.card-button-row button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.favorite-button {
+  background-color: #4a6fa5;
+  color: white;
+}
+
+.favorite-button:hover {
+  background-color: #3b5c8a;
+}
+
+.reserve-button {
+  background-color: #4a6fa5;
+  color: white;
+}
+
+.reserve-button:hover {
+  background-color: #3b5c8a;
+}
