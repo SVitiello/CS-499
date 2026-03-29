@@ -12,6 +12,7 @@
       <p><strong>Training Status:</strong> {{ animal.trainingStatus }}</p>
       <p><strong>Reserved:</strong> {{ animal.reserved ? 'Yes' : 'No' }}</p>
       <p><strong>Favorite:</strong> {{ animal.isFavorite ? 'Yes' : 'No' }}</p>
+      <p><strong>Score:</strong> {{ animal.rankScore }}</p>
 
       <div class ="card-button-row">
         <button class="favorite-button" (click)="favoriteAnimal(animal)">

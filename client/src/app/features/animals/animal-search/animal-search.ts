@@ -6,10 +6,15 @@ import { Component } from '@angular/core';
   templateUrl: './animal-search.html',
   styleUrl: './animal-search.css',
 })
+
 export class AnimalSearch {
   animalType = '';
   gender = '';
   hasSearched = false;
+  // converting age into months to work with search algorithm
+  minAgeMonths: number | null = null;
+  maxAgeMonths: number | null = null;
+  
 
   // Using a mock list of animals prior to connecting database
   animals = [
@@ -86,27 +91,86 @@ export class AnimalSearch {
   ]
 
   // Search functions to filter search results by animal type and gender
-  filteredAnimals = [...this.animals];
+  filteredAnimals = this.animals.map(animal => ({
+    ...animal,
+    rankScore: 0
+  }));
 
   searchAnimals() {
     this.hasSearched = true;
 
     this.filteredAnimals = this.animals.filter(animal => {
       const matchesType = !this.animalType ||
-      animal.animalType === this.animalType;
+      animal.animalType.toLowerCase() === this.animalType.toLowerCase();
 
       const matchesGender = !this.gender ||
       animal.gender.toLowerCase() === (this.gender.toLowerCase());
 
       return matchesType && matchesGender;
-    });
+    })
+    .map(animal => ({
+      ...animal,
+      rankScore: this.scoreAnimal(animal)
+    }))
+    .sort((a, b) => b.rankScore - a.rankScore);
   }
+
+  scoreAnimal(animal: any): number {
+    let score = 0;
+
+    const trainingStatus = animal.trainingStatus.toLowerCase();
+
+
+    // Adds score for training status. 
+    if (trainingStatus === 'fully trained') {
+      score += 50;
+    } else if (trainingStatus === 'in training') {
+      score += 30;
+    }
+
+    // Adds score for animal type.
+    if (this.animalType && animal.animalType.toLowerCase() === this.animalType.toLowerCase()) {
+      score += 30;
+    }
+
+    // calls function to convert animal age to months
+    const animalAgeMonths = this.getAgeInMonths(animal.age);
+
+    // Adds score for age of animal.
+    if (this.minAgeMonths !== null && this.maxAgeMonths !== null &&
+      animalAgeMonths >= this.minAgeMonths && animalAgeMonths <= this.maxAgeMonths) {
+        score += 30;
+      }
+
+    return score;
+  }
+
+  // function to convert animal age to months
+  getAgeInMonths(age: string): number {
+    const parts = age.toLowerCase().split(' ');
+    const value = parseInt(parts[0], 10);
+    const unit = parts[1];
+    
+    // if the age is in years, multiply by 12.
+    if (unit.includes('year')) {
+      return value * 12;
+    }
+
+    return value;
+  }
+
 
   // Clear search results
   clearSearch() {
     this.animalType = '';
     this.gender = '';
     this.hasSearched = false;
-    this.filteredAnimals = [...this.animals];
+    this.minAgeMonths = null;
+    this.maxAgeMonths = null;
+
+    this.filteredAnimals = this.animals.map(animal => ({
+      ...animal,
+      rankScore: 0
+    }));
   }
 }

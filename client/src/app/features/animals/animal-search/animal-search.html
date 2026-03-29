@@ -2,7 +2,7 @@
   <div class="search-card">
     <h2>Search Animals</h2>
     <p class="search-subtitle">
-      Search for rescue animals by type and gender.
+      Search for rescue animals by type, gender, and age range.
     </p>
 
     <div class="form-grid">
@@ -23,11 +23,21 @@
           <option value="Female">Female</option>
         </select>
       </div>
+
+      <div class="form-group">
+        <label for="minAgeMonths">Minimum Age in months</label>
+        <input id="minAgeMonths" type="number" [(ngModel)]="minAgeMonths" />
+      </div>
+
+      <div class="form-group">
+        <label for="maxAgeMonths">Maximum Age in months</label>
+        <input id="maxAgeMonths" type="number" [(ngModel)]="maxAgeMonths" />
+      </div>
     </div>
 
     <div class="button-row">
-      <button type="button" (click)="searchAnimals()">Search</button>
-      <button type="button" class="clear-button" (click)="clearSearch()">Clear</button>
+      <button (click)="searchAnimals()">Search</button>
+      <button class="clear-button" (click)="clearSearch()">Clear</button>
     </div>
   </div>
 
