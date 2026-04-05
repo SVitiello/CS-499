@@ -1,24 +1,56 @@
-const animals = require('../data/animals');
+const Animal = require('../models/animals');
 
-// Gets list of all animals
-const getAllAnimals = (req, res) => {
-  res.json(animals);
+const getAnimals = async (req, res) => {
+  try {
+    const animals = await Animal.find();
+    res.status(200).json(animals);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to retrieve animals',
+      error: error.message
+    });
+  }
 };
 
-// Gets an animal by their Id
-const getAnimalById = (req, res) => {
-    const animalId = parseInt(req.params.id);
+const searchAnimals = async (req, res) => {
+  try {
+    const { animalType, gender, minAge, maxAge } = req.query;
 
-    const animal = animals.find(a => a.id === animalId);
+    const query = {};
 
-    if(!animal) {
-        return res.status(404).json({ message: "Animal not found"});
+    if (animalType) {
+      query.animalType = animalType;
     }
 
-    res.json(animal);
+    if (gender) {
+      query.gender = gender;
+    }
+
+    if (minAge || maxAge) {
+      query.age = {};
+
+      if (minAge) {
+        query.age.$gte = Number(minAge);
+      }
+
+      if (maxAge) {
+        query.age.$lte = Number(maxAge);
+      }
+    }
+
+    const animals = await Animal.find(query);
+
+    res.status(200).json(animals);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to search animals',
+      error: error.message
+    });
+  }
 };
 
 module.exports = {
-  getAllAnimals,
-  gatAnimalById
+  getAnimals,
+  searchAnimals
 };
+

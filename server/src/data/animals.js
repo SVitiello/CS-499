@@ -1,13 +1,16 @@
-// Mock data for animals used for testing prior to connecting to mongoDB database
+require('dotenv').config();
+const mongoose = require('mongoose');
+const Animal = require('../models/animals');
 
+// Seeding MongoDB database
 const animals = [
     {
         id: 1,
         name: "Frank",
         animalType: "Dog",
         gender: "Male",
-        age: "2 years",
-        weight: "50 pounds",
+        age: "24",
+        weight: "50",
         acquisitionDate: "2026-01-15",
         acquisitionCountry: "United States",
         trainingStatus: "In training",
@@ -19,8 +22,8 @@ const animals = [
         name: "Lucy",
         animalType: "Monkey",
         gender: "Female",
-        age: "7 months",
-        weight: "4 pounds",
+        age: "7",
+        weight: "4",
         acquisitionDate: "2025-12-15",
         acquisitionCountry: "Canada",
         trainingStatus: "Not trained",
@@ -32,8 +35,8 @@ const animals = [
         name: "Lady",
         animalType: "Dog",
         gender: "Female",
-        age: "5 years",
-        weight: "48 pounds",
+        age: "60",
+        weight: "48",
         acquisitionDate: "2026-08-03",
         acquisitionCountry: "United States",
         trainingStatus: "Fully trained",
@@ -45,8 +48,8 @@ const animals = [
         name: "Shadow",
         animalType: "Dog",
         gender: "Male",
-        age: "3 years",
-        weight: "70 pounds",
+        age: "36",
+        weight: "70",
         acquisitionDate: "2024-09-24",
         acquisitionCountry: "Mexico",
         trainingStatus: "In Training",
@@ -58,8 +61,8 @@ const animals = [
         name: "Chip",
         animalType: "Monkey",
         gender: "male",
-        age: "2 years",
-        weight: "5 pounds",
+        age: "24",
+        weight: "5",
         acquisitionDate: "2025-04-19",
         acquisitionCountry: "Canada",
         trainingStatus: "In training",
@@ -68,4 +71,19 @@ const animals = [
     }
 ]
 
-module.exports = animals;
+const seedAnimals = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+
+    await Animal.deleteMany({});
+    await Animal.insertMany(animals);
+
+    console.log('Animals seeded successfully');
+    process.exit();
+  } catch (error) {
+    console.error('Seeding failed:', error.message);
+    process.exit(1);
+  }
+};
+
+seedAnimals();
