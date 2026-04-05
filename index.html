@@ -3,19 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My ePortfolio</title>
+  <title>Sharon Vitiello</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #eef4ff, #dbe9ff);
+      color: #1f2d3d;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 40px;
+    }
+
+    .hero {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 2.5rem;
+      color: #2c5aa0;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #4a5a6a;
+      margin-bottom: 35px;
+    }
+
+    .section {
+      margin-top: 30px;
+      padding: 25px;
+      background: #f8fbff;
+      border-left: 6px solid #4a6fa5;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #2c5aa0;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 24px;
+      background-color: #4a6fa5;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+      background-color: #355785;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #5c6b7a;
+    }
+  </style>
 </head>
 <body>
-  <h1>My ePortfolio</h1>
+  <div class="container">
+    <div class="hero">
+      <h1>CS-499 ePortfolio</h1>
+      <p class="subtitle">
+        Welcome to my ePortfolio. This site highlights my work, project enhancements, and development process.
+      </p>
 
-  <h2>Code Review Video</h2>
-  <p>
-    This video demonstrates my code review and explains the design decisions and enhancements in my project.
-  </p>
-  <p>
-    <a href="https://drive.google.com/file/d/1P3CyS4fwGspQs6EmQIMqmKDJQfEc77ij/view?usp=sharing" target="_blank">
-      Watch the code review video
-    </a>
-  </p>
+      <div class="section">
+        <h2>Code Review Video</h2>
+        <p>
+          This video demonstrates my code review and explains the design decisions and enhancements in my project.
+        </p>
+        <a 
+          class="button"
+          href="https://drive.google.com/file/d/1P3CyS4fwGspQs6EmQIMqmKDJQfEc77ij/view?usp=sharing" 
+          target="_blank">
+          Watch the Code Review Video
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 My ePortfolio
+    </footer>
+  </div>
 </body>
 </html>
