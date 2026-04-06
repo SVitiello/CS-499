@@ -96,24 +96,36 @@ export class AnimalSearch {
     rankScore: 0
   }));
 
-  searchAnimals() {
-    this.hasSearched = true;
+searchAnimals() {
+  this.hasSearched = true;
 
-    this.filteredAnimals = this.animals.filter(animal => {
-      const matchesType = !this.animalType ||
+  this.filteredAnimals = this.animals.filter(animal => {
+    const matchesType =
+      !this.animalType ||
       animal.animalType.toLowerCase() === this.animalType.toLowerCase();
 
-      const matchesGender = !this.gender ||
-      animal.gender.toLowerCase() === (this.gender.toLowerCase());
+    const matchesGender =
+      !this.gender ||
+      animal.gender.toLowerCase() === this.gender.toLowerCase();
 
-      return matchesType && matchesGender;
-    })
-    .map(animal => ({
-      ...animal,
-      rankScore: this.scoreAnimal(animal)
-    }))
-    .sort((a, b) => b.rankScore - a.rankScore);
-  }
+    const animalAgeMonths = this.getAgeInMonths(animal.age);
+
+    const matchesMinAge =
+      this.minAgeMonths === null || animalAgeMonths >= this.minAgeMonths;
+
+    const matchesMaxAge =
+      this.maxAgeMonths === null || animalAgeMonths <= this.maxAgeMonths;
+
+    const matchesAge = matchesMinAge && matchesMaxAge;
+
+    return matchesType && matchesGender && matchesAge;
+  })
+  .map(animal => ({
+    ...animal,
+    rankScore: this.scoreAnimal(animal)
+  }))
+  .sort((a, b) => b.rankScore - a.rankScore);
+}
 
   scoreAnimal(animal: any): number {
     let score = 0;
