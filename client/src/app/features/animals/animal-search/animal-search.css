@@ -5,24 +5,27 @@
 }
 
 .search-card {
-  background: white;
-  border-radius: 14px;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   margin-bottom: 28px;
+  border: 1px solid #e7ece8;
 }
 
 .search-card h2 {
   margin-top: 0;
   margin-bottom: 8px;
-  color: #4a6fa5;
+  color: #6f8677;
   text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
 .search-subtitle {
   margin-top: 0;
   margin-bottom: 24px;
-  color: #555;
+  color: #6b7280;
   text-align: center;
 }
 
@@ -40,54 +43,56 @@
 .form-group label {
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: #4b5563;
 }
 
 .form-group input,
 .form-group select {
   padding: 12px 14px;
-  border: 1px solid #cfd6e4;
-  border-radius: 8px;
+  border: 1px solid #d8e0da;
+  border-radius: 10px;
   font-size: 1rem;
-  background-color: white;
-  color: #333;
+  background-color: #fbfcfb;
+  color: #374151;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #4a6fa5;
-  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.12);
+  border-color: #93a697;
+  box-shadow: 0 0 0 3px rgba(147, 166, 151, 0.18);
 }
 
 .button-row {
   margin-top: 22px;
   display: flex;
+  justify-content: flex-end;
   gap: 12px;
 }
 
-/* Search button */
 .button-row button {
-  background-color: #4a6fa5;
+  background-color: #7f9485;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 12px 22px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .button-row button:hover {
-  background-color: #3b5c8a;
+  background-color: #6f8677;
+  transform: translateY(-1px);
 }
 
-/* clear button */
 .clear-button {
-  background-color: #e5e7eb;
-  color: #333;
+  background-color: #edf1ee;
+  color: #4b5563;
 }
 
 .clear-button:hover {
-  background-color: #d1d5db;
+  background-color: #dfe7e1;
 }

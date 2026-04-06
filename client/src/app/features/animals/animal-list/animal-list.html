@@ -5,15 +5,22 @@
     <div class="animal-card" *ngFor="let animal of animals">
       <h3>{{ animal.name }}</h3>
 
-      <p><strong>Type:</strong> {{ animal.animalType }}</p>
-      <p><strong>Gender:</strong> {{ animal.gender }}</p>
-      <p><strong>Age:</strong> {{ animal.age }}</p>
-      <p><strong>Weight:</strong> {{ animal.weight }} </p>
-      <p><strong>Training Status:</strong> {{ animal.trainingStatus }}</p>
-      <p><strong>Reserved:</strong> {{ animal.reserved ? 'Yes' : 'No' }}</p>
-      <p><strong>Favorite:</strong> {{ animal.isFavorite ? 'Yes' : 'No' }}</p>
+      <div class="card-details">
+        <div class="card-column">
+          <p><strong>Type:</strong> {{ animal.animalType }}</p>
+          <p><strong>Gender:</strong> {{ animal.gender }}</p>
+          <p><strong>Age:</strong> {{ animal.age }}</p>
+          <p><strong>Weight:</strong> {{ animal.weight }}</p>
+        </div>
 
-      <div class ="card-button-row">
+        <div class="card-column">
+          <p><strong>Training Status:</strong> {{ animal.trainingStatus }}</p>
+          <p><strong>Reserved:</strong> {{ animal.reserved ? 'Yes' : 'No' }}</p>
+          <p><strong>Favorite:</strong> {{ animal.isFavorite ? 'Yes' : 'No' }}</p>
+        </div>
+      </div>
+
+      <div class="card-button-row">
         <button class="favorite-button" (click)="favoriteAnimal(animal)">
           {{ animal.isFavorite ? 'Remove Favorite' : 'Add to Favorites' }}
         </button>
