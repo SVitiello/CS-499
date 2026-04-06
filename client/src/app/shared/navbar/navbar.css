@@ -34,7 +34,7 @@
   position: absolute;
   top: 16px;
   right: 20px;
-  transform: translateY(-50%);
+ 
 
   background-color: #f5f7f6; 
   color: #7f9485; 
@@ -64,14 +64,8 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  height: 80px;
-}
+  height: 140px;
+  width: auto;
 
-
-.logo {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 80px;
+  object-fit: contain;
 }
