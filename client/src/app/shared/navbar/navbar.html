@@ -1,13 +1,17 @@
-<nav class = "navbar">
-  <div class = "navbar-content">
+<nav class="navbar">
+  <div class="navbar-content">
     <img 
       src="/GraziosoSalvareLogo.png" 
       alt="Company Logo" 
       class="logo" 
     />
-    <h1> Rescue Animal System </h1>
-    <button 
-    *ngIf="!isLoginPage()"
-    class="logout-button" (click)="logout()">Log Out</button>
+    <h1>Rescue Animal System</h1>
+
+    <button
+      *ngIf="!isLoginPage()"
+      class="logout-button"
+      (click)="logout()">
+      Log Out
+    </button>
   </div>
 </nav>
