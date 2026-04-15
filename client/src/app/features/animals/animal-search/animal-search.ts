@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Animal, AnimalService } from '../animal-service';
 
 @Component({
   selector: 'app-animal-search',
@@ -7,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './animal-search.css',
 })
 
-export class AnimalSearch {
+export class AnimalSearch implements OnInit {
   animalType = '';
   gender = '';
   hasSearched = false;
@@ -15,174 +16,153 @@ export class AnimalSearch {
   minAgeMonths: number | null = null;
   maxAgeMonths: number | null = null;
   
-
-  // Using a mock list of animals prior to connecting database
-  animals = [
-    {
-        id: 1,
-        name: "Frank",
-        animalType: "Dog",
-        gender: "Male",
-        age: "2 years",
-        weight: "50 pounds",
-        acquisitionDate: "2026-01-15",
-        acquisitionCountry: "United States",
-        trainingStatus: "In training",
-        reserved: false,
-        inServiceCountry: "United States",
-        isFavorite: false
-    },
-    {
-        id: 2,
-        name: "Lucy",
-        animalType: "Monkey",
-        gender: "Female",
-        age: "7 months",
-        weight: "4 pounds",
-        acquisitionDate: "2025-12-15",
-        acquisitionCountry: "Canada",
-        trainingStatus: "Not trained",
-        reserved: false,
-        inServiceCountry: "Canada",
-        isFavorite: false
-    },
-    {
-        id: 3,
-        name: "Lady",
-        animalType: "Dog",
-        gender: "Female",
-        age: "5 years",
-        weight: "48 pounds",
-        acquisitionDate: "2026-08-03",
-        acquisitionCountry: "United States",
-        trainingStatus: "Fully trained",
-        reserved: true,
-        inServiceCountry: "United States",
-        isFavorite: false
-    },
-    {
-        id: 4,
-        name: "Shadow",
-        animalType: "Dog",
-        gender: "Male",
-        age: "3 years",
-        weight: "70 pounds",
-        acquisitionDate: "2024-09-24",
-        acquisitionCountry: "Mexico",
-        trainingStatus: "In Training",
-        reserved: false,
-        inServiceCountry: "United States",
-        isFavorite: false
-    },
-    {
-        id: 5,
-        name: "Chip",
-        animalType: "Monkey",
-        gender: "male",
-        age: "2 years",
-        weight: "5 pounds",
-        acquisitionDate: "2025-04-19",
-        acquisitionCountry: "Canada",
-        trainingStatus: "In training",
-        reserved: true,
-        inServiceCountry: "Canada",
-        isFavorite: false
-    }
-  ]
+  // Pulling animals from database
+  animals: Animal [] = [];
 
   // Search functions to filter search results by animal type and gender
-  filteredAnimals = this.animals.map(animal => ({
-    ...animal,
-    rankScore: 0
-  }));
+  filteredAnimals: Animal[] = [];
 
-searchAnimals() {
-  this.hasSearched = true;
+  // Controls pagination through the front-end. Starts on page 1, limit 4 results per page.
+  currentPage = 1;
+  itemsPerPage = 4;
 
-  this.filteredAnimals = this.animals.filter(animal => {
-    const matchesType =
-      !this.animalType ||
-      animal.animalType.toLowerCase() === this.animalType.toLowerCase();
+  constructor(private animalService:AnimalService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-    const matchesGender =
-      !this.gender ||
-      animal.gender.toLowerCase() === this.gender.toLowerCase();
+  ngOnInit(): void {
+    this.loadAnimals();
+  }
 
-    const animalAgeMonths = this.getAgeInMonths(animal.age);
+  loadAnimals(): void {
+    this.animalService.getAnimals().subscribe({
+      next: (animals) => {
+        this.animals = animals.map(animal => ({
+          ...animal,
+          isFavorite: false,
+          rankScore: 0
+        }));
 
-    const matchesMinAge =
-      this.minAgeMonths === null || animalAgeMonths >= this.minAgeMonths;
+        this.filteredAnimals = [];
+        this.hasSearched = false;
+      },
+      error: (error) => {
+        console.error('Failed to load animasl:', error);
+      }
+    });
+  }
 
-    const matchesMaxAge =
-      this.maxAgeMonths === null || animalAgeMonths <= this.maxAgeMonths;
+  searchAnimals(): void {
+    this.hasSearched = true;
+    this.currentPage = 1;
 
-    const matchesAge = matchesMinAge && matchesMaxAge;
+    this.animalService.searchAnimals({
+      animalType: this.animalType || undefined,
+      gender: this.gender || undefined,
+      minAge: this.minAgeMonths,
+      maxAge: this.maxAgeMonths
+    }).subscribe({
+      next: (animals: Animal[]) => {
+        this.filteredAnimals = animals
+        .map(animal => ({
+          ...animal,
+          isFavorite: false,
+          rankScore: this.scoreAnimal(animal)
+        }))
+        .sort((a,b) => (b.rankScore || 0) - (a.rankScore || 0));
+        // immediately updates form. Gets rid of bug with delay on click.
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Failed to search animals:', error);
+        this.filteredAnimals = [];
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
-    return matchesType && matchesGender && matchesAge;
-  })
-  .map(animal => ({
-    ...animal,
-    rankScore: this.scoreAnimal(animal)
-  }))
-  .sort((a, b) => b.rankScore - a.rankScore);
-}
-
-  scoreAnimal(animal: any): number {
+  scoreAnimal(animal: Animal): number {
     let score = 0;
+    const trainingStatus = animal.trainingStatus?.toLowerCase() || '';
 
-    const trainingStatus = animal.trainingStatus.toLowerCase();
-
-
-    // Adds score for training status. 
     if (trainingStatus === 'fully trained') {
       score += 50;
     } else if (trainingStatus === 'in training') {
       score += 30;
     }
 
-    // Adds score for animal type.
-    if (this.animalType && animal.animalType.toLowerCase() === this.animalType.toLowerCase()) {
+    if (
+      this.animalType &&
+      animal.animalType.toLowerCase() === this.animalType.toLowerCase()
+    ) {
       score += 30;
     }
 
-    // calls function to convert animal age to months
-    const animalAgeMonths = this.getAgeInMonths(animal.age);
-
-    // Adds score for age of animal.
-    if (this.minAgeMonths !== null && this.maxAgeMonths !== null &&
-      animalAgeMonths >= this.minAgeMonths && animalAgeMonths <= this.maxAgeMonths) {
-        score += 30;
-      }
+    if (
+      this.minAgeMonths !== null &&
+      this.maxAgeMonths !== null &&
+      animal.age >= this.minAgeMonths &&
+      animal.age <= this.maxAgeMonths
+    ) {
+      score += 30;
+    }
 
     return score;
   }
 
-  // function to convert animal age to months
-  getAgeInMonths(age: string): number {
-    const parts = age.toLowerCase().split(' ');
-    const value = parseInt(parts[0], 10);
-    const unit = parts[1];
-    
-    // if the age is in years, multiply by 12.
-    if (unit.includes('year')) {
-      return value * 12;
-    }
-
-    return value;
+  // Logic for pagination controlled through front-end
+  get paginatedAnimals(): Animal[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredAnimals.slice(startIndex, endIndex);
+    this.cdr.detectChanges();
   }
 
+  // shows the total pages returned in results
+  get totalPages(): number {
+    return Math.ceil(this.filteredAnimals.length / this.itemsPerPage);
+  }
 
-  // Clear search results
-  clearSearch() {
+  // Moves to next page of results
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.cdr.detectChanges();
+    }
+  }
+
+  // Moves to previous page of results
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.cdr.detectChanges();
+    }
+  }
+
+  formatAge(ageInMonths: number): string {
+    if (ageInMonths >= 12) {
+      const years = Math.floor(ageInMonths / 12);
+      return years === 1 ? '1 year' : `${years} years`;
+    }
+
+    return ageInMonths === 1 ? '1 month' : `${ageInMonths} months`;
+  }
+
+  formatWeight(weight: number): string {
+    return `${weight} pounds`;
+  }
+
+  clearSearch(): void {
     this.animalType = '';
     this.gender = '';
     this.hasSearched = false;
     this.minAgeMonths = null;
     this.maxAgeMonths = null;
-
-    this.filteredAnimals = this.animals.map(animal => ({
-      ...animal,
-      rankScore: 0
-    }));
+    // no results show on clear button hit
+    this.filteredAnimals = [];
+    // starts cleared search at page 1
+    this.currentPage = 1;
+    // immediately updates form. Gets rid of bug with delay on click.
+    this.cdr.detectChanges();
   }
 }

@@ -5,44 +5,66 @@
       Search for rescue animals by type, gender, and age range.
     </p>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="animalType">Type</label>
-        <select id="animalType" [(ngModel)]="animalType">
-          <option value="">Any</option>
-          <option value="Dog">Dog</option>
-          <option value="Monkey">Monkey</option>
-        </select>
+    <form (ngSubmit)="searchAnimals()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="animalType">Type</label>
+          <select id="animalType" name="animalType" [(ngModel)]="animalType">
+            <option value="">Any</option>
+            <option value="Dog">Dog</option>
+            <option value="Monkey">Monkey</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" [(ngModel)]="gender">
+            <option value="">Any</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="minAgeMonths">Minimum Age in months</label>
+          <input
+            id="minAgeMonths"
+            name="minAgeMonths"
+            type="number"
+            [(ngModel)]="minAgeMonths" />
+        </div>
+
+        <div class="form-group">
+          <label for="maxAgeMonths">Maximum Age in months</label>
+          <input
+            id="maxAgeMonths"
+            name="maxAgeMonths"
+            type="number"
+            [(ngModel)]="maxAgeMonths" />
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="gender">Gender</label>
-        <select id="gender" [(ngModel)]="gender">
-          <option value="">Any</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+      <div class="button-row">
+        <button type="submit">Search</button>
+        <button type="button" class="clear-button" (click)="clearSearch()">Clear</button>
       </div>
-
-      <div class="form-group">
-        <label for="minAgeMonths">Minimum Age in months</label>
-        <input id="minAgeMonths" type="number" [(ngModel)]="minAgeMonths" />
-      </div>
-
-      <div class="form-group">
-        <label for="maxAgeMonths">Maximum Age in months</label>
-        <input id="maxAgeMonths" type="number" [(ngModel)]="maxAgeMonths" />
-      </div>
-    </div>
-
-    <div class="button-row">
-      <button (click)="searchAnimals()">Search</button>
-      <button class="clear-button" (click)="clearSearch()">Clear</button>
-    </div>
+    </form>
   </div>
 
   <app-animal-list
-    [animals]="filteredAnimals"
+    [animals]="paginatedAnimals"
     [hasSearched]="hasSearched">
   </app-animal-list>
+
+  <div class="pagination" *ngIf="hasSearched && filteredAnimals.length > 0">
+    <button type="button" (click)="previousPage()" [disabled]="currentPage === 1">
+      Previous
+    </button>
+
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+    <button type="button" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
 </div>

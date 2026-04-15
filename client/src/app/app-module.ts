@@ -9,6 +9,7 @@ import { Navbar } from './shared/navbar/navbar';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Login } from './features/auth/login/login';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { Login } from './features/auth/login/login';
     BrowserModule,
     CommonModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
