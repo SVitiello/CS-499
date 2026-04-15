@@ -19,11 +19,11 @@ const searchAnimals = async (req, res) => {
     const query = {};
 
     if (animalType) {
-      query.animalType = animalType;
+      query.animalType = { $regex: new RegExp(`^${animalType}$`, 'i') };
     }
 
     if (gender) {
-      query.gender = gender;
+      query.gender = { $regex: new RegExp(`^${gender}$`, 'i') };
     }
 
     if (minAge || maxAge) {

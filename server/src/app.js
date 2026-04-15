@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const animalsRoutes = require('./routes/animals');
 const reservationsRoutes = require('./routes/reservations');
 const favoritesRoutes = require('./routes/favorites');
@@ -6,6 +7,7 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
