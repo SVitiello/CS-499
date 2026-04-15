@@ -88,8 +88,9 @@
 
     <h2>Code Review</h2>
     <p>
-      This video walks through my project, explains my design decisions,
-      and highlights the improvements I made throughout development.
+      The link below takes you to my code review, where I walk through my 3 original artifacts and discuss their existing functionality, review the code, 
+      and discuss my enhancement plans. Although typically completed by a peer rather than the original author of the code, this code review was an
+      important step in the code enhancement process because it demonstrates what the original artifacts did well and what improvements could be made.
     </p>
 
     <a href="https://drive.google.com/file/d/1P3CyS4fwGspQs6EmQIMqmKDJQfEc77ij/view?usp=sharing"
@@ -100,8 +101,14 @@
 
     <h2>Enhancement 1: Software Engineering and Design</h2>
     <p>
-      
-      
+      My original artifact for enhancement 1 was created in August of 2024 in a course focused on object oriented programming. It contains 4 Java classes
+      that make up a console application which was designed to allow users to search through an array of rescue animals to find animals suitable for search and rescue training. 
+      The program demonstrates foundational object-oriented principles such as encapsulation and class structure, but was limited to a console interface. I
+      chose this artifact because, while it met the requirements of the original course, there was an opportunity to turn it into a working web based 
+      application with a functional front-end to demonstrate my growth in software engineering and design. I accomplished this using Angular, node.js, and express and reorganized the structure of the program to separate it
+      into backend and front-end components. For this enhancement, I implemented a log in layer and a search layer. Once a user logs in, they can search for an 
+      animal by filtering by criteria (animal type and gender). Animals can also be added to a user's favorites or reserved. Through this process, I learned the importance of 
+      separation of concerns and how structuring an application into layers improves readability, scalability, and maintainability. 
     </p>
 
     <div class="button-group">
@@ -119,7 +126,15 @@
 
     <h2>Enhancement 2: Algorithms and Data Structures</h2>
     <p>
-      
+      My original artifact for enhancement 2 was created in the fall (June-August) 2025 term from a Client Server Development course. The artifact is a Jupyter Notebook that is used with the
+      Python based CRUD application file chosen for my enhancement 3 below. I chose this specific file for my algorithms and data structures enhancement because it includes a filtering option for
+      the search results that filter the entire database of animals by animal type. This artifact did have a basic sorting algorithm, however I enhanced it by creating a
+      scoring system. With this newly implemented algorithm, a user narrows down their search results by filters and the algorithm sorts the search results by the highest
+      scoring animal based on specific criteria. For example, an animal that is already fully trained in search and rescue will appear before an animal not yet trained.
+      I researched and learned a lot about how to implement a sorting algorithm with this enhancement as far as how I can evaluate multiple criteria based on a user's filter
+      inputs and filtered, mapped, and sorted results. A challenge I overcame with this enhancement was with animal ages because they were initially stored as strings in months
+      and years. I converted the age by splitting the string and multiplying by 12 to compare all ages in months. This left the user interface intact displaying the ages in 
+      months and years while also accurately accounting for age in the sorting algorithm.
     </p>
 
     <div class="button-group">
@@ -137,6 +152,14 @@
     
     <h2>Enhancement 3: Databases</h2>
     <p>
+      My original artifact for enhancement 3 was created alongside the artifact used in enhancement 2 in the fall (June-August) 2025 term from a Client Server Development course.
+      It consists of a Python-based CRUD application that interacts with a MongoDB database to retrieve and display animal data. While the original artifact demonstrated basic 
+      database operations, it did not integrate with a user-facing application and did not support authentication or structured API design. This artifact was the
+      perfect final step for my project because it did demonstrate database calls, but needed a lot of improvement; and the improvements completed my full-stack application. This enhancement
+      showcases my skills in implementing a structured MongoDB database using collections. I created RESTful API endpoints with Express to complete the MEAN stack, and allowed
+      users to search for animals, add them to their favorites or reserve animals. During this enhancement, I also completed JWT authentication for users, along with user registration;
+      and tied the back end into the front-end. Through this enhancement I learned about creating secure API endpoints and integrating backend services with the frontend application.
+      
       
     </p>
 
@@ -150,11 +173,13 @@
       <a href="https://github.com/SVitiello/CS-499/tree/main/original-artifacts/enhancement-3"
         target="_blank"
         class="button">
+        Original Artifact
       </a>
     </div>
 
-    <h2>Application Demo</h2>
+    <h2>Enhancement 3 Demo</h2>
     <img src="Enhancement3.gif" alt="App Demo" style="width: 100%; max-width: 800px; border-radius: 10px;" />
+    <p>This gif showcases log in credentials working, searching the database by filters, and results displaying with pagination.</p>
 
   </div>
 
