@@ -1,0 +1,8 @@
+/* Gives a color for the background to make search cards stand out
+  Also adds a font family so users have a cleaner looking font depending on their system */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f6f5;
+  color: #222;
+}
